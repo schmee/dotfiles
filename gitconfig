@@ -1,0 +1,63 @@
+[merge]
+    conflictstyle = diff3
+
+[alias]
+    br = branch
+    cam = commit -a -m
+    cm = commit -m
+    co = checkout
+    dc = diff --cached
+    df = diff
+    ds = diff --stat
+    dw = diff --word-diff
+    fp = push -f
+    l3 = !git ls -3
+    l5 = !git ls -5
+    l7 = !git ls -7
+    la = "!git config -l | grep alias | cut -c 7-"
+    last = log -1 HEAD
+    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+    lls = log --pretty=format:"%h%d\\ %Creset%s\\ [%cn]" --decorate
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    m = checkout master
+    rb = rebase
+    rbi = rebase -i
+    rbr = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(authorname) %(refname:short)'
+    rc = commit --amend --no-edit
+    rca = commit -a --amend --no-edit
+    rcp = !git rca && git push -f
+    rh = reset --hard
+    rhh = reset HEAD^ --hard
+    rhhh = reset HEAD^^ --hard
+    s = status -sb
+    sh = show HEAD
+    slog = log --abbrev-commit --pretty=oneline
+    st = stash
+    stl = stash list
+    stp = stash pop
+    undo = reset --hard HEAD
+
+[core]
+    excludesfile = ~/.gitignore_global
+    pager = less -+F -+X
+
+[push]
+    default = current
+
+[branch]
+    autosetuprebase = always
+    mergeoptions = --no-ff
+
+[branch "master"]
+    mergeoptions = --no-ff
+
+[rebase]
+    autosquash = true
+    autostash = true
+
+[rerere]
+    enabled = 1
+
+[diff]
+    compactionHeuristic = true
