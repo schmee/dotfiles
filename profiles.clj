@@ -22,6 +22,8 @@
                                    (intern 'clojure.core 'refresh refresh)
                                    (intern 'clojure.core 'dd dd)
                                    (refresh)))}
+        :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
+                                          :sign-releases false}]]
         :ultra {:repl {:extend-notation false
                        :namespace-maps false
                        :seq-limit 1000
