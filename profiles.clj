@@ -1,10 +1,12 @@
-{:user {:plugins [[lein-ancient "0.6.15"]
+{:user {:plugins [[cider/cider-nrepl "0.24.0"]
+                  [lein-ancient "0.6.15"]
                   [lein-cljfmt "0.7.0"]
                   [lein-monolith "1.5.0"]
                   [venantius/ultra "0.6.0"]]
         :dependencies [[hashp "0.2.0"]
                        [lambdaisland/deep-diff2 "2.0.108"]
                        [org.clojure/tools.namespace "1.0.0"]
+                       [philoskim/debux "0.7.8"]
                        [schmee/repl-tools "SNAPSHOT" :exclusions [[org.clojure/clojurescript]]]]
         :injections [(require 'hashp.core)
                      (require 'debux.core)]

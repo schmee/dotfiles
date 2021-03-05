@@ -20,6 +20,7 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'kassio/neoterm'
 Plugin 'lfilho/cosco.vim'
+Plugin 'olical/conjure'
 Plugin 'mboughaba/vim-lessmess'
 Plugin 'mhinz/vim-startify'
 Plugin 'mtth/scratch.vim'
@@ -186,20 +187,7 @@ tabe
 endfunction
 nnoremap <F6> :call EditVimRc()<CR>
 
-
-" nnoremap <leader>r :T (do (require 'user :reload) (user/refresh))<cr>
-nnoremap <leader>r :T (refresh)<cr>
-nnoremap <leader>t :execute ":T " . getline(1) . ")"<cr>
-nnoremap <leader>e :T (do (require 'user :reload) (user/reload))<cr>
-" Get docs
-nnoremap <leader>dd :execute ":T " "(clojure.repl/doc " . expand("<cword>")")"<cr>
-nnoremap <leader>f :execute ":T " "(clojure.reflect/reflect " . expand("<cword>")")"<cr>
-let g:neoterm_default_mod = 'vertical'
-nmap gl <Plug>(neoterm-repl-send)
 augroup Clj
   au!
   au FileType clojure call neoterm#repl#set('lein repl')
 augroup END
-nmap gj glab
-
-autocmd BufEnter *.clj execute ":T " . getline(1) . ")"
