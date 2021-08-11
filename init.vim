@@ -9,8 +9,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'Shougo/deoplete.nvim'
-" Plugin 'mhinz/vim-grepper'
-" Plugin 'valloric/YouCompleteMe'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'easymotion/vim-easymotion'
@@ -126,6 +124,8 @@ autocmd BufEnter * silent! lcd %:p:h " change current dir to dir of current file
 autocmd FocusLost * silent! wa "autosaves all files when window loses focus
 autocmd FocusGained * :checktime " Automatically reload changed files
 
+let maplocalleader = ","
+
 " delimitMate
 let delimitMate_expand_cr = 1
 
@@ -168,6 +168,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " vim-fzf
 nmap <C-f> :GFiles <CR>
 nmap <C-b> :Buffers <CR>
+nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
 let g:fzf_layout = { 'down': '~15%' }
 let g:fzf_preview_window = ''
 
@@ -187,7 +188,4 @@ tabe
 endfunction
 nnoremap <F6> :call EditVimRc()<CR>
 
-augroup Clj
-  au!
-  au FileType clojure call neoterm#repl#set('lein repl')
-augroup END
+let g:zig_fmt_autosave = 0
