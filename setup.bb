@@ -5,7 +5,8 @@
 (def paths
   (mapv
     (fn [[file path]] [file (fs/path home path)])
-    [["gitconfig" ".gitconfig"]
+    [
+     ; ["gitconfig" ".gitconfig"]
      ["gitignore_global" ".gitignore_global"]
      ["init.vim" ".config/nvim/init.vim"]
      ["inputrc" ".inputrc"]

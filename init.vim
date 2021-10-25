@@ -2,42 +2,38 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 set rtp+=/usr/local/opt/fzf
 
-filetype off
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'eraserhd/parinfer-rust'
-Plugin 'hashivim/vim-terraform'
-Plugin 'haya14busa/incsearch.vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'kassio/neoterm'
-Plugin 'lfilho/cosco.vim'
-Plugin 'lukas-reineke/indent-blankline.nvim'
-Plugin 'olical/conjure'
-Plugin 'mboughaba/vim-lessmess'
-Plugin 'mhinz/vim-startify'
-Plugin 'mtth/scratch.vim'
-Plugin 'nelstrom/vim-visual-star-search'
-Plugin 'raimondi/delimitMate'
-Plugin 'terryma/vim-expand-region'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'ziglang/zig.vim'
-
-call vundle#end()
 filetype plugin indent on
+call plug#begin('~/.vim/plugged')
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'airblade/vim-gitgutter'
+Plug 'arcticicestudio/nord-vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'eraserhd/parinfer-rust'
+Plug 'hashivim/vim-terraform'
+Plug 'haya14busa/incsearch.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'kassio/neoterm'
+Plug 'lfilho/cosco.vim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'olical/conjure'
+Plug 'mboughaba/vim-lessmess'
+Plug 'mhinz/vim-startify'
+Plug 'mtth/scratch.vim'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'raimondi/delimitMate'
+Plug 'terryma/vim-expand-region'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'ziglang/zig.vim'
+
+call plug#end()
 
 autocmd BufNewFile,BufRead *.zig set ft=zig
 autocmd BufNewFile,BufRead *.bb set ft=clojure
