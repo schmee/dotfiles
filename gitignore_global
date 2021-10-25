@@ -1,5 +1,6 @@
 .java-version
 .rebel_readline_history
 .rebl
+.nrepl-port
 zig-cache
 notes.txt

@@ -23,6 +23,18 @@ export NNN_COLORS='2'
 export NNN_PLUG='o:fzopen'
 export PATH="/opt/apache-maven-3.6.3/bin:$PATH"
 
+java14() {
+  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
+}
+
+java16() {
+  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home'
+}
+
+java17() {
+  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home'
+}
+
 set -o vi
 bindkey -v
 
@@ -85,9 +97,10 @@ alias gshh='git show $(git lls | fzf | cut -d " " -f 1)'
 alias gshs='git show --stat'
 alias gst='git stash'
 alias gstp='git stash pop'
-alias h='http -p b'
+# alias h='http -p b'
+alias h='xh'
 alias hc='hub compare'
-alias hv='http -v'
+alias hv='xh -v'
 alias javlaskitdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
 alias lc='lein clean'
 alias lf='lein fig:build'
@@ -106,8 +119,12 @@ alias pgrbm='git checkout master && git pull --rebase && git checkout - && git r
 alias rbi='git rebase -i $(git lls | fzf | cut -d " " -f 1)^'
 alias tf='terraform'
 alias tree='exa --tree'
+alias t='task'
+alias tw='timew'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 
 dr() {
   docker run -it --rm $1 /bin/bash
 }
+
+# zprof

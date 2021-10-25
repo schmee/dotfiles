@@ -18,11 +18,11 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'kassio/neoterm'
 Plugin 'lfilho/cosco.vim'
+Plugin 'lukas-reineke/indent-blankline.nvim'
 Plugin 'olical/conjure'
 Plugin 'mboughaba/vim-lessmess'
 Plugin 'mhinz/vim-startify'
 Plugin 'mtth/scratch.vim'
-Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'raimondi/delimitMate'
 Plugin 'terryma/vim-expand-region'
@@ -53,12 +53,12 @@ set autowriteall
 set background=dark
 set backspace=2
 set colorcolumn=100
+set completeopt-=preview
 set encoding=utf-8
 set foldlevel=99
 set foldmethod=syntax
 set foldnestmax=10
 set gdefault
-set guifont=Menlo:h12
 set hlsearch
 set ignorecase
 set incsearch
@@ -153,8 +153,9 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-" Indent guides
-let g:indent_guides_guide_size = 1
+" lukas-reineke/indent-blankline.nvim
+let g:indent_blankline_enabled = v:false
+nnoremap <leader>ig :IndentBlanklineToggle<CR>
 
 " lessmess
 let g:enable_lessmess_onsave = 1
@@ -181,6 +182,11 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 
+" Gitgutter
+nmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+
 " Edit .vimrc
 function! EditVimRc()
 tabe
@@ -189,3 +195,6 @@ endfunction
 nnoremap <F6> :call EditVimRc()<CR>
 
 let g:zig_fmt_autosave = 0
+let g:conjure#debug = v:false
+let g:conjure#log#hud#enabled = v:false
+autocmd User ConjureEval if expand("%:t") =~ "^conjure-log-" | exec "normal G" | endif
