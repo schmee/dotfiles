@@ -40,6 +40,7 @@ call vundle#end()
 filetype plugin indent on
 
 autocmd BufNewFile,BufRead *.zig set ft=zig
+autocmd BufNewFile,BufRead *.bb set ft=clojure
 autocmd Filetype java setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
 colorscheme nord
 filetype indent on
