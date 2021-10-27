@@ -5,22 +5,20 @@ set rtp+=/usr/local/opt/fzf
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'airblade/vim-gitgutter'
+Plug 'Shougo/deoplete.nvim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'eraserhd/parinfer-rust'
-Plug 'hashivim/vim-terraform'
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
-Plug 'kassio/neoterm'
-Plug 'lfilho/cosco.vim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'olical/conjure'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
 Plug 'mtth/scratch.vim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'olical/conjure'
 Plug 'raimondi/delimitMate'
 Plug 'terryma/vim-expand-region'
 Plug 'tommcdo/vim-exchange'
@@ -179,11 +177,6 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 
-" Gitgutter
-nmap <leader>gs <Plug>(GitGutterStageHunk)
-nmap <leader>gu <Plug>(GitGutterUndoHunk)
-nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-
 " Edit .vimrc
 function! EditVimRc()
 tabe
@@ -194,4 +187,21 @@ nnoremap <F6> :call EditVimRc()<CR>
 let g:zig_fmt_autosave = 0
 let g:conjure#debug = v:false
 let g:conjure#log#hud#enabled = v:false
-autocmd User ConjureEval if expand("%:t") =~ "^conjure-log-" | exec "normal G" | endif
+
+lua <<EOF
+require('gitsigns').setup {
+  signs = {
+      add = {text = '+'},
+      change = {text = '~', show_count = true},
+      delete = {show_count = true},
+      changedelete = {hl = 'GitSignsDelete', text = '~', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+  },
+
+  keymaps = {
+      ['n <leader>gs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+      ['n <leader>gu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+      ['n <leader>gr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+      ['n <leader>gp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+    }
+}
+EOF

@@ -1,3 +1,5 @@
+#!/usr/bin/env bb
+
 (require '[babashka.fs :as fs])
 
 (def home (System/getProperty "user.home"))
