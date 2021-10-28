@@ -7,7 +7,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim'
 Plug 'arcticicestudio/nord-vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'eraserhd/parinfer-rust'
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
@@ -16,9 +15,10 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
 Plug 'mtth/scratch.vim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nelstrom/vim-visual-star-search'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'olical/conjure'
+Plug 'phaazon/hop.nvim'
 Plug 'raimondi/delimitMate'
 Plug 'terryma/vim-expand-region'
 Plug 'tommcdo/vim-exchange'
@@ -124,16 +124,11 @@ let maplocalleader = ","
 " delimitMate
 let delimitMate_expand_cr = 1
 
-" Easy-motion
-let g:EasyMotion_smartcase = 1
-map <Leader> <Plug>(easymotion-prefix)
-nmap s <Plug>(easymotion-s2)
-vmap s <Plug>(easymotion-s2)
-nmap <Leader>s <Plug>(easymotion-sl2)
-" nmap L <Plug>(easymotion-f)
-" vmap L <Plug>(easymotion-f)
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ASDFGHJKLQWERTYUIOPZXCVBNM;'
+" Hop.nvim
+lua <<EOF
+require('hop').setup()
+vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+EOF
 
 " incserach.vim
 map /  <Plug>(incsearch-forward)
