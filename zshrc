@@ -42,9 +42,6 @@ bindkey '^R' history-incremental-search-backward
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(scmpuff init -s)"
 
-git config --global user.name "$(<~/dotfiles/secrets/name)"
-git config --global user.email "$(<~/dotfiles/secrets/email)"
-
 alias -g dl='`docker ps -a | fzf -m | cut -c1-13`'
 alias -g dll='`docker ps -l -q`'
 alias -g ff='`fzf`'

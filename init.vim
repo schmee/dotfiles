@@ -200,3 +200,6 @@ require('gitsigns').setup {
     }
 }
 EOF
+
+" let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
+let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
