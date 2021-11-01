@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim'
 Plug 'arcticicestudio/nord-vim'
-Plug 'eraserhd/parinfer-rust'
+Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'lewis6991/gitsigns.nvim'
@@ -178,6 +178,13 @@ tabe
 :e $MYVIMRC
 endfunction
 nnoremap <F6> :call EditVimRc()<CR>
+
+" Edit .zshrc
+function! EditZshRc()
+tabe
+:e ~/.zshrc
+endfunction
+nnoremap <F7> :call EditZshRc()<CR>
 
 let g:zig_fmt_autosave = 0
 let g:conjure#debug = v:false

@@ -1,15 +1,19 @@
-# zmodload zsh/zprof
-DISABLE_UPDATE_PROMPT=true
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 
-plugins=(z fzf git)
-export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="robbyrussell"
-source $ZSH/oh-my-zsh.sh
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# zmodload zsh/zprof
 
 setopt HIST_IGNORE_SPACE
 # Make the caret work in git show HEAD^
 setopt NO_NOMATCH
 
+export CLICOLOR=1
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--reverse --bind 'ctrl-space:toggle'"
@@ -40,7 +44,10 @@ bindkey -v
 
 bindkey '^R' history-incremental-search-backward
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(scmpuff init -s)"
+
+source ~/evalcache.zsh
+_evalcache scmpuff init -s
+_evalcache zoxide init zsh
 
 alias -g dl='`docker ps -a | fzf -m | cut -c1-13`'
 alias -g dll='`docker ps -l -q`'
@@ -102,6 +109,7 @@ alias javlaskitdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSRespon
 alias lc='lein clean'
 alias lf='lein fig:build'
 alias lk='lein kaocha'
+alias l='ls -alh'
 alias ll='ls -alh'
 alias lr='lein repl'
 alias mci='mvn clean install'
@@ -123,5 +131,10 @@ alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 dr() {
   docker run -it --rm $1 /bin/bash
 }
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # zprof

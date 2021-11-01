@@ -14,6 +14,8 @@
      ["init.vim" ".config/nvim/init.vim"]
      ["inputrc" ".inputrc"]
      ["zshrc" ".zshrc"]
+     ["p10k.zsh" ".p10k.zsh"]
+     ["evalcache.zsh" "evalcache.zsh"]
      ["profiles.clj" ".lein/profiles.clj"]]))
 
 (defn diff? [a b]
