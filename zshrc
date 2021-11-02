@@ -9,20 +9,21 @@ fi
 # zmodload zsh/zprof
 
 setopt HIST_IGNORE_SPACE
-# Make the caret work in git show HEAD^
-setopt NO_NOMATCH
+setopt NO_NOMATCH # Make the caret work in git show HEAD^
 
 export CLICOLOR=1
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--reverse --bind 'ctrl-space:toggle'"
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_UPGRADE=1
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
 export KEYTIMEOUT=1
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LEIN_USE_BOOTCLASSPATH=no
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
 export NNN_COLORS='2'
 export NNN_PLUG='o:fzopen'
 export PATH="/opt/apache-maven-3.6.3/bin:$PATH"
