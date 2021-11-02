@@ -9,14 +9,15 @@
   (mapv
     (fn [[file path]] [file (fs/path home path)])
     [
+     ["evalcache.zsh" "evalcache.zsh"]
      ; ["gitconfig" ".gitconfig"]
      ["gitignore_global" ".gitignore_global"]
      ["init.vim" ".config/nvim/init.vim"]
      ["inputrc" ".inputrc"]
-     ["zshrc" ".zshrc"]
+     ["kitty.conf" ".config/kitty/kitty.conf"]
      ["p10k.zsh" ".p10k.zsh"]
-     ["evalcache.zsh" "evalcache.zsh"]
-     ["profiles.clj" ".lein/profiles.clj"]]))
+     ["profiles.clj" ".lein/profiles.clj"]
+     ["zshrc" ".zshrc"]]))
 
 (defn diff? [a b]
   (let [a-hash (:out (sh "md5" "-q" (.toString a)))
