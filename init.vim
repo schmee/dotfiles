@@ -12,6 +12,7 @@ Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
 Plug 'mtth/scratch.vim'
@@ -217,3 +218,5 @@ nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 
 let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
+
+nnoremap <localleader>c :T zig build run<cr>

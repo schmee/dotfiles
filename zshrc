@@ -14,6 +14,7 @@ setopt NO_NOMATCH # Make the caret work in git show HEAD^
 export CLICOLOR=1
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_ALT_C_COMMAND='fd --type d'
 export FZF_DEFAULT_OPTS="--reverse --bind 'ctrl-space:toggle'"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
@@ -44,6 +45,7 @@ set -o vi
 bindkey -v
 
 bindkey '^R' history-incremental-search-backward
+bindkey '^E' fzf-cd-widget
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source ~/evalcache.zsh
