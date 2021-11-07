@@ -6,11 +6,11 @@ filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim'
+Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
@@ -146,6 +146,26 @@ map g# <Plug>(incsearch-nohl-g#)
 " lukas-reineke/indent-blankline.nvim
 let g:indent_blankline_enabled = v:false
 nnoremap <leader>ig :IndentBlanklineToggle<CR>
+"lua <<EOF
+"vim.opt.termguicolors = true
+"vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+"vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+"vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+"vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+"vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+"vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+"require("indent_blankline").setup {
+"    char_highlight_list = {
+"        "IndentBlanklineIndent1",
+"        "IndentBlanklineIndent2",
+"        "IndentBlanklineIndent3",
+"        "IndentBlanklineIndent4",
+"        "IndentBlanklineIndent5",
+"        "IndentBlanklineIndent6",
+"    },
+"}
+"EOF
 
 " lessmess
 let g:enable_lessmess_onsave = 1
@@ -190,23 +210,10 @@ let g:zig_fmt_autosave = 0
 let g:conjure#debug = v:false
 let g:conjure#log#hud#enabled = v:false
 
-lua <<EOF
-require('gitsigns').setup {
-  signs = {
-      add = {text = '+'},
-      change = {text = '~', show_count = true},
-      delete = {show_count = true},
-      changedelete = {hl = 'GitSignsDelete', text = '~', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
-  },
+" Gitgutter
+nmap <leader>gs <Plug>(GitGutterStageHunk)
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 
-  keymaps = {
-      ['n <leader>gs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-      ['n <leader>gu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-      ['n <leader>gr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-      ['n <leader>gp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    }
-}
-EOF
-
-" let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
+let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'

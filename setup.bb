@@ -60,7 +60,7 @@
   (copy paths))
 
 (defn read-from [paths]
-  (let [flipped (mapv (fn [{:keys [file path]}] [path file]) paths)]
+  (let [flipped (mapv (fn [{:keys [file path]}] {:file path :path file}) paths)]
     (copy flipped)))
 
 (defn diff [paths]
