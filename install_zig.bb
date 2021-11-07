@@ -1,10 +1,11 @@
 #!/usr/bin/env bb
 
-(require '[babashka.curl :as curl])
-(require '[babashka.fs :as fs])
-(require '[cheshire.core :as json])
-(require '[clojure.java.io :as io])
-(require '[clojure.java.shell :refer [sh]])
+(ns zig-install
+  (:require [babashka.curl :as curl]
+            [babashka.fs :as fs]
+            [cheshire.core :as json]
+            [clojure.java.io :as io]
+            [clojure.java.shell :refer [sh]]))
 
 (def home (System/getProperty "user.home"))
 (def dir (.getParent (fs/path *file*)))
@@ -24,19 +25,21 @@
 (def load-index
   (memoize -load-index))
 
-(defn get-download-link [index]
-  (-> index :master :x86_64-macos :tarball))
+(defn get-download-link [index version]
+  (-> index version :x86_64-macos :tarball))
 
 (defn download-tarball [tarball-link]
   (io/copy
     (:body (curl/get tarball-link {:as :stream}))
     (fs/file dir "zig.tar.xz")))
 
-(defn install-most-recent []
+(defn install []
   (let [index (load-index)
-        link (get-download-link index)]
+        version (or (-> *command-line-args* first keyword) :master)
+        link (get-download-link index version)]
+    (println "Installing" link)
     (if (= link (slurp zig-version))
-      (println "Already on the most recent master, nothing to do")
+      (println "Specified version already installed, nothing to do")
       (do
         (download-tarball link)
         (sh "mkdir" "zig" :dir dir-str)
@@ -47,10 +50,10 @@
         (fs/delete-tree (p "zig"))
         (spit zig-version link)))))
 
-(install-most-recent)
+(install)
 
 (comment
   (def link (-> (load-index) get-download-link))
-  (spit (fs/file dir ".zig-version") link)
-  (slurp (fs/file dir ".zig-version"))
+  (spit zig-version link)
+  (slurp zig-version)
   (install-most-recent))
