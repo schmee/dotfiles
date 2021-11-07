@@ -18,6 +18,21 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
+prompt_my_zig() {
+  _p9k_upglob '*.zig' && return
+
+  local zig=$commands[zig]
+  if ! _p9k_cache_stat_get $0 $zig '/usr/local/bin/zig'; then
+    local v
+    v="$(zig version)" || v=
+    _p9k_cache_stat_set "↯ ${v//\%/%%}"
+  fi
+
+  [[ -n $_p9k__cache_val[1] ]] || return
+
+  _p9k_prompt_segment "$0" white 172 '' 0 '' $_p9k__cache_val[1]
+}
+
 () {
   emulate -L zsh -o extended_glob
 
@@ -34,6 +49,7 @@
     dir                     # current directory
     vcs                     # git status
     java_version            # java version (https://www.java.com/)
+    my_zig                  # zig version
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     # prompt_char             # prompt symbol
   )
