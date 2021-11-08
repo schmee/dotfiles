@@ -5,6 +5,13 @@
 
 (def home (System/getProperty "user.home"))
 
+(def benchmark-shell
+  {:ask? false
+   :desc "Benchmark with Hyperfine"
+   :fn (fn []
+         @(babashka.process/process ["hyperfine" "--warmup" "3" "zsh -i -c exit"] {:inherit true})
+         nil)})
+
 (def paths
   (mapv
     (fn [m] (assoc m :path (fs/path home (:path m))))
@@ -21,16 +28,13 @@
      {:file "kitty.conf"
       :path ".config/kitty/kitty.conf"}
      {:file "p10k.zsh"
-      :path ".p10k.zsh"}
+      :path ".p10k.zsh"
+      :post-update-hooks [benchmark-shell]}
      {:file "profiles.clj"
       :path ".lein/profiles.clj"}
      {:file "zshrc"
       :path ".zshrc"
-      :post-update-hooks [{:ask? false
-                           :desc "Benchmark with Hyperfine"
-                           :fn (fn []
-                                 @(babashka.process/process ["hyperfine" "--warmup" "3" "zsh -i -c exit"] {:inherit true})
-                                 nil)}]}]))
+      :post-update-hooks [benchmark-shell]}]))
 
 (defn run-post-update-hook [{:keys [ask? fn desc]}]
   (if ask?
