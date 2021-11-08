@@ -8,13 +8,10 @@ fi
 
 # zmodload zsh/zprof
 
-setopt HIST_IGNORE_SPACE
-setopt NO_NOMATCH # Make the caret work in git show HEAD^
-
 export CLICOLOR=1
 export EDITOR=nvim
-export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_ALT_C_COMMAND='fd --type d'
+export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--reverse --bind 'ctrl-space:toggle'"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
@@ -29,21 +26,18 @@ export NNN_COLORS='2'
 export NNN_PLUG='o:fzopen'
 export PATH="/opt/apache-maven-3.6.3/bin:$PATH"
 
-java14() {
-  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
-}
+HISTFILE=~/.zsh_history
+HISTSIZE=1000000000
+SAVEHIST=1000000000
+setopt appendhistory
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
 
-java16() {
-  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home'
-}
-
-java17() {
-  export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home'
-}
-
-set -o vi
 bindkey -v
-
+set -o vi
+setopt NO_NOMATCH # Make the caret work in git show HEAD^
 bindkey '^R' history-incremental-search-backward
 bindkey '^E' fzf-cd-widget
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -52,6 +46,12 @@ source ~/evalcache.zsh
 _evalcache scmpuff init -s
 _evalcache zoxide init zsh
 
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# alias h='http -p b'
 alias -g dl='`docker ps -a | fzf -m | cut -c1-13`'
 alias -g dll='`docker ps -l -q`'
 alias -g ff='`fzf`'
@@ -63,10 +63,10 @@ alias cloc='tokei'
 alias cwd="pwd | tr -d '\n' | pbcopy"
 alias d='docker'
 alias dc='docker-compose'
+alias dcud='docker-compose down --remove-orphans && docker-compose up -d'
 alias dps='docker ps'
 alias drm='docker rm -f -v'
 alias drma='docker rm -f -v `docker ps -aq`'
-alias dcud='docker-compose down --remove-orphans && docker-compose up -d'
 alias ezh='nvim ~/.zshrc'
 alias g='git'
 alias gam='git commit -a -m'
@@ -104,15 +104,14 @@ alias gshh='git show $(git lls | fzf | cut -d " " -f 1)'
 alias gshs='git show --stat'
 alias gst='git stash'
 alias gstp='git stash pop'
-# alias h='http -p b'
 alias h='xh'
 alias hc='hub compare'
 alias hv='xh -v'
 alias javlaskitdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
+alias l='ls -alh'
 alias lc='lein clean'
 alias lf='lein fig:build'
 alias lk='lein kaocha'
-alias l='ls -alh'
 alias ll='ls -alh'
 alias lr='lein repl'
 alias mci='mvn clean install'
@@ -125,19 +124,16 @@ alias pbc='pbcopy'
 alias pbp='pbpaste'
 alias pgrbm='git checkout master && git pull --rebase && git checkout - && git rebase master'
 alias rbi='git rebase -i $(git lls | fzf | cut -d " " -f 1)^'
+alias rmr='rm -rf'
+alias t='task'
 alias tf='terraform'
 alias tree='exa --tree'
-alias t='task'
 alias tw='timew'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 
-dr() {
-  docker run -it --rm $1 /bin/bash
-}
-
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home' }
+java16() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home' }
+java17() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home' }
+dr() { docker run -it --rm $1 /bin/bash }
 
 # zprof

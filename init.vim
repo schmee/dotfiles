@@ -90,6 +90,7 @@ syntax on
 
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
+inoremap <bar> <bar><bar><ESC>i
 map <D-t> :tabnew<CR>
 map <D-w> :tabclose<CR>
 nmap <Space> :
@@ -110,6 +111,7 @@ nnoremap <leader>gd :g//d<CR>
 nnoremap <leader>pp :%!jq .<CR>
 nnoremap <leader>px :%!tidy -xml -utf8 -q -i<CR>
 nnoremap <leader>vd :v//d<CR>
+nnoremap <localleader>c :T zig build run<cr>
 nnoremap <silent> <S-h> gT
 nnoremap <silent> <S-l> gt
 nnoremap Q @q
@@ -218,5 +220,3 @@ nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 
 let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
-
-nnoremap <localleader>c :T zig build run<cr>
