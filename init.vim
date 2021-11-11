@@ -120,6 +120,7 @@ nnoremap <silent> <S-l> gt
 nnoremap Q @q
 nnoremap ZZ :xa<CR>
 nnoremap z<Space> zA
+vmap Y "*y
 
 autocmd BufEnter * silent! lcd %:p:h " change current dir to dir of current file
 autocmd FocusLost * silent! wa "autosaves all files when window loses focus
