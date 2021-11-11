@@ -11,6 +11,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
@@ -217,6 +219,10 @@ let g:conjure#log#hud#enabled = v:false
 nmap <leader>gs <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+
+" Goyo.vim
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
 
 let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'

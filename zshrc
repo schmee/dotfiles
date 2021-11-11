@@ -129,6 +129,9 @@ alias t='task'
 alias tf='terraform'
 alias tree='exa --tree'
 alias tw='timew'
+alias twc='timew @1 continue'
+alias tws='timew stop'
+alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 
 java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home' }
