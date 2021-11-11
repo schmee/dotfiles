@@ -114,7 +114,6 @@ nnoremap <leader>gd :g//d<CR>
 nnoremap <leader>pp :%!jq .<CR>
 nnoremap <leader>px :%!tidy -xml -utf8 -q -i<CR>
 nnoremap <leader>vd :v//d<CR>
-nnoremap <localleader>c :T zig build run<cr>
 nnoremap <silent> <S-h> gT
 nnoremap <silent> <S-l> gt
 nnoremap Q @q
@@ -198,6 +197,14 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
+
+" neoterm
+let g:neoterm_default_mod = 'vertical'
+let g:neoterm_autoscroll = 1
+let g:neoterm_auto_repl_cmd = 0
+nnoremap <localleader>c :T zig build run<cr>
+nnoremap <localleader>v :Tclear<cr>
+nnoremap <localleader>t :Topen<cr>
 
 " Edit .vimrc
 function! EditVimRc()
