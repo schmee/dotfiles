@@ -129,8 +129,6 @@ alias t='task'
 alias tf='terraform'
 alias tree='exa --tree'
 alias tw='timew'
-alias twc='timew @1 continue'
-alias tws='timew stop'
 alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 
@@ -138,5 +136,13 @@ java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Co
 java16() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home' }
 java17() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home' }
 dr() { docker run -it --rm $1 /bin/bash }
+twc() {
+  TIME="${1:-0}"
+  timew '@1' continue "$TIME"mins ago
+}
+tws() {
+  TIME="${1:-0}"
+  timew stop "$TIME"mins ago
+}
 
 # zprof
