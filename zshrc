@@ -32,6 +32,7 @@ SAVEHIST=1000000000
 setopt appendhistory
 setopt hist_ignore_dups
 setopt hist_ignore_space
+setopt no_histverify
 setopt inc_append_history
 setopt share_history
 
@@ -135,6 +136,10 @@ alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home' }
 java16() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home' }
 java17() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home' }
+jv() {
+  export JAVA_HOME=/Library/Java/JavaVirtualMachines/Contents/Home/$(ls /Library/Java/JavaVirtualMachines | fzf)
+  echo "JAVA_HOME switched to $JAVA_HOME"
+}
 dr() { docker run -it --rm $1 /bin/bash }
 twc() {
   TIME="${1:-0}"

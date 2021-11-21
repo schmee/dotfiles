@@ -23,7 +23,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'olical/conjure'
 Plug 'phaazon/hop.nvim'
 Plug 'raimondi/delimitMate'
-Plug 'sickill/vim-pasta'
+" Plug 'sickill/vim-pasta'
 Plug 'terryma/vim-expand-region'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
@@ -48,6 +48,7 @@ hi Search guibg=yellow guifg=red
 set autochdir
 set autoindent
 set autoread
+set autowrite
 set autowriteall
 set background=dark
 set backspace=2
@@ -124,6 +125,7 @@ vmap Y "*y
 autocmd BufEnter * silent! lcd %:p:h " change current dir to dir of current file
 autocmd FocusLost * silent! wa "autosaves all files when window loses focus
 autocmd FocusGained * :checktime " Automatically reload changed files
+autocmd BufLeave,InsertLeave * silent! w " Automatically save
 
 let maplocalleader = ","
 
@@ -185,6 +187,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " vim-fzf
 nmap <C-f> :GFiles <CR>
 nmap <C-b> :Buffers <CR>
+nmap <localleader>l :BLines <CR>
 nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
 let g:fzf_layout = { 'down': '~15%' }
 let g:fzf_preview_window = ''
@@ -199,12 +202,13 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 
 " neoterm
-let g:neoterm_default_mod = 'vertical'
-let g:neoterm_autoscroll = 1
 let g:neoterm_auto_repl_cmd = 0
-nnoremap <localleader>c :T zig build run<cr>
-nnoremap <localleader>v :Tclear<cr>
+let g:neoterm_autoscroll = 1
+let g:neoterm_default_mod = 'vertical'
+nnoremap <localleader>b :T zig build run<cr>
+nnoremap <localleader>c :T zig build test<cr>
 nnoremap <localleader>t :Topen<cr>
+nnoremap <localleader>v :Tclear<cr>
 
 " Edit .vimrc
 function! EditVimRc()
@@ -233,5 +237,11 @@ nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
+" vim-pasta
+let g:pasta_disabled_filetypes = ['clj', 'clojure']
+let g:pasta_enabled_filetypes = ['zig']
+
 let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
+
+nmap <localleader>c :ConjureEvalBuf<CR>
