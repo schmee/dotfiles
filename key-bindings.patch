@@ -1,0 +1,22 @@
+--- key-bindings.zsh	2021-11-21 15:38:18.000000000 +0100
++++ key-bindings.zsh.bak	2021-11-21 15:37:51.000000000 +0100
+@@ -94,12 +94,18 @@
+   local selected num
+   setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
+   selected=( $(fc -rl 1 | perl -ne 'print if !$seen{(/^\s*[0-9]+\**\s+(.*)/, $1)}++' |
+-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
++    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort --expect=ctrl-e $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+   local ret=$?
+   if [ -n "$selected" ]; then
++    local accept=0
++    if [[ $selected[1] = ctrl-e ]]; then
++      accept=1
++      shift selected
++    fi
+     num=$selected[1]
+     if [ -n "$num" ]; then
+       zle vi-fetch-history -n $num
++      [[ $accept = 0 ]] && zle accept-line
+     fi
+   fi
+   zle reset-prompt

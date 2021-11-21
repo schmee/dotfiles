@@ -1,9 +1,12 @@
 #!/usr/bin/env bb
 
-(require '[babashka.fs :as fs])
-(require '[clojure.java.shell :refer [sh]])
+(ns setup
+  (:require [babashka.fs :as fs]
+            [clojure.java.shell :as shell]
+            [clojure.string :as str]))
 
 (def home (System/getProperty "user.home"))
+(def dotfiles (fs/path home "dotfiles"))
 
 (def benchmark-shell
   {:ask? false
@@ -71,6 +74,17 @@
   (doseq [{:keys [file path]} paths]
     @(babashka.process/process ["git" "--no-pager" "diff" file path] {:inherit true})
     nil))
+
+(defn sh [& args]
+  (-> (apply shell/sh args)
+      :out
+      str/trim))
+
+(defn patch-fzf []
+  (let [fzf-path (sh "brew" "--prefix" "fzf")
+        path-to-file (str fzf-path "/shell/key-bindings.zsh")]
+    (println "Patching " path-to-file)
+    (sh "patch" "-u" path-to-file (.toString (fs/path dotfiles "key-bindings.patch")))))
 
 (condp = (first *command-line-args*)
   "read" (read-from paths)
