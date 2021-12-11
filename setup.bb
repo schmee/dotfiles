@@ -5,6 +5,11 @@
             [clojure.java.shell :as shell]
             [clojure.string :as str]))
 
+(defn sh [& args]
+  (-> (apply shell/sh args)
+      :out
+      str/trim))
+
 (def home (System/getProperty "user.home"))
 (def dotfiles (fs/path home "dotfiles"))
 
@@ -51,8 +56,8 @@
       (fn))))
 
 (defn diff? [a b]
-  (let [a-hash (:out (sh "md5" "-q" (.toString a)))
-        b-hash (:out (sh "md5" "-q" (.toString b)))]
+  (let [a-hash (sh "md5" "-q" (.toString a))
+        b-hash (sh "md5" "-q" (.toString b))]
     (not= a-hash b-hash)))
 
 (defn copy [paths]
@@ -74,11 +79,6 @@
   (doseq [{:keys [file path]} paths]
     @(babashka.process/process ["git" "--no-pager" "diff" file path] {:inherit true})
     nil))
-
-(defn sh [& args]
-  (-> (apply shell/sh args)
-      :out
-      str/trim))
 
 (defn patch-fzf []
   (let [fzf-path (sh "brew" "--prefix" "fzf")
