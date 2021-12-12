@@ -42,7 +42,9 @@
       :path ".lein/profiles.clj"}
      {:file "zshrc"
       :path ".zshrc"
-      :post-update-hooks [benchmark-shell]}]))
+      :post-update-hooks [benchmark-shell]}
+     {:file "zlogin"
+      :path ".zlogin"}]))
 
 (defn run-post-update-hook [{:keys [ask? fn desc]}]
   (if ask?

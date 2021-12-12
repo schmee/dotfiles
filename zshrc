@@ -15,6 +15,7 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--reverse --bind 'ctrl-space:toggle'"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_UPGRADE=1
+export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home'
 export KEYTIMEOUT=1
 export LANG=en_US.UTF-8
@@ -31,6 +32,7 @@ HISTSIZE=1000000000
 SAVEHIST=1000000000
 setopt appendhistory
 setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt no_histverify
 setopt inc_append_history
@@ -149,5 +151,16 @@ tws() {
   TIME="${1:-0}"
   timew stop "$TIME"mins ago
 }
+
+source ~/dotfiles/completion.zsh
+
+# autoload -Uz compinit && compinit
+autoload -Uz compinit
+if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+  compdump
+else
+  compinit -C
+fi
 
 # zprof
