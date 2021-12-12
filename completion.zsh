@@ -1,4 +1,5 @@
 # Mostly copied from https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/completion.zsh
+zmodload zsh/complist
 
 unsetopt flowcontrol
 setopt menu_complete   # do not autoselect the first completion entry
@@ -27,3 +28,5 @@ zstyle ':completion:*' cache-path ~/.zcompcache
 
 # ... unless we really want to.
 zstyle '*' single-ignored show
+
+bindkey -M menuselect '^M' .accept-line
