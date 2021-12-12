@@ -21,14 +21,14 @@ Plug 'mtth/scratch.vim'
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'olical/conjure'
-Plug 'phaazon/hop.nvim'
+Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
-" Plug 'sickill/vim-pasta'
+Plug 'sickill/vim-pasta'
+Plug 'svermeulen/vim-subversive'
 Plug 'terryma/vim-expand-region'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -131,12 +131,6 @@ let maplocalleader = ","
 
 " delimitMate
 let delimitMate_expand_cr = 1
-
-" Hop.nvim
-lua <<EOF
-require('hop').setup()
-vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
-EOF
 
 " incserach.vim
 map /  <Plug>(incsearch-forward)
@@ -244,4 +238,7 @@ let g:pasta_enabled_filetypes = ['zig']
 let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
 
-nmap <localleader>c :ConjureEvalBuf<CR>
+" nmap <localleader>c :ConjureEvalBuf<CR>
+"
+nmap s <plug>(SubversiveSubstitute)
+nmap <leader>s <plug>(SubversiveSubstituteRange)
