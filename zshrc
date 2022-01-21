@@ -54,6 +54,11 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
+
 # alias h='http -p b'
 alias -g dl='`docker ps -a | fzf -m | cut -c1-13`'
 alias -g dll='`docker ps -l -q`'
@@ -132,6 +137,7 @@ alias t='task'
 alias tf='terraform'
 alias tree='exa --tree'
 alias tw='timew'
+alias twd='timew summary 24hours'
 alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 

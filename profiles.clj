@@ -1,6 +1,6 @@
 {:user {:plugins [[cider/cider-nrepl "0.27.2"]
                   [lein-ancient "0.7.0"]
-                  [lein-cljfmt "0.8.0"]
+                  ; [lein-cljfmt "0.8.0"]
                   [lein-monolith "1.7.0"]]
                   ; [lein-nodisassemble "0.1.3"]]
                   ; [venantius/ultra "0.6.0"]]

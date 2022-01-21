@@ -6,7 +6,7 @@ filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
@@ -66,6 +66,7 @@ set lazyredraw
 set modelines=0
 set mouse=a
 set nobackup
+set nofixeol
 set noswapfile
 set nowrap
 set nowritebackup
@@ -181,6 +182,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " vim-fzf
 nmap <C-f> :GFiles <CR>
 nmap <C-b> :Buffers <CR>
+nmap <localleader>j :Lines <CR>
 nmap <localleader>l :BLines <CR>
 nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
 let g:fzf_layout = { 'down': '~15%' }
@@ -199,8 +201,8 @@ autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = 'vertical'
-nnoremap <localleader>b :T zig build run<cr>
-nnoremap <localleader>c :T zig build test<cr>
+nnoremap <localleader>b :T zig build test<cr>
+nnoremap <localleader>c :T zig build run<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 
@@ -242,3 +244,4 @@ let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
 "
 nmap s <plug>(SubversiveSubstitute)
 nmap <leader>s <plug>(SubversiveSubstituteRange)
+xmap <leader>s <plug>(SubversiveSubstituteRange)
