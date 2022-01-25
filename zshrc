@@ -137,7 +137,7 @@ alias t='task'
 alias tf='terraform'
 alias tree='exa --tree'
 alias tw='timew'
-alias twd='timew summary 24hours'
+alias twt='timew summary 24hours'
 alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
 

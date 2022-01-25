@@ -10,6 +10,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -18,8 +19,9 @@ Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
 Plug 'mtth/scratch.vim'
-Plug 'nelstrom/vim-visual-star-search'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'olical/conjure'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
@@ -206,6 +208,17 @@ nnoremap <localleader>c :T zig build run<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"vim", "zig"},
+  sync_install = false,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
 " Edit .vimrc
 function! EditVimRc()
 tabe
@@ -245,3 +258,9 @@ let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
 nmap s <plug>(SubversiveSubstitute)
 nmap <leader>s <plug>(SubversiveSubstituteRange)
 xmap <leader>s <plug>(SubversiveSubstituteRange)
+
+" vim-asterisk
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g* <Plug>(asterisk-gz*)
+map g# <Plug>(asterisk-gz#)
