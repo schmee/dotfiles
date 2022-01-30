@@ -2,7 +2,7 @@
 zmodload zsh/complist
 
 unsetopt flowcontrol
-setopt menu_complete   # do not autoselect the first completion entry
+# setopt menu_complete   # do not autoselect the first completion entry
 setopt auto_menu         # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end

@@ -14,6 +14,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'lfilho/cosco.vim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
@@ -194,10 +195,12 @@ let g:fzf_preview_window = ''
 let g:deoplete#enable_at_startup = 1
 " call deoplete#custom#option('auto_complete_delay', 0)
 " call deoplete#custom#option('auto_refresh_delay', 5)
+call deoplete#custom#source('_', 'smart_case', v:true)
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
+autocmd FileType zig nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 
 " neoterm
 let g:neoterm_auto_repl_cmd = 0
