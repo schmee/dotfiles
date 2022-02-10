@@ -11,11 +11,13 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
-Plug 'lukas-reineke/indent-blankline.nvim'
+" Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
@@ -23,7 +25,7 @@ Plug 'mtth/scratch.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-Plug 'olical/conjure'
+" Plug 'olical/conjure'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
 Plug 'sickill/vim-pasta'
@@ -188,7 +190,7 @@ nmap <C-b> :Buffers <CR>
 nmap <localleader>j :Lines <CR>
 nmap <localleader>l :BLines <CR>
 nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
-let g:fzf_layout = { 'down': '~15%' }
+let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3 } }
 let g:fzf_preview_window = ''
 
 " " Deoplete
@@ -206,8 +208,8 @@ autocmd FileType zig nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = 'vertical'
-nnoremap <localleader>b :T zig build test<cr>
-nnoremap <localleader>c :T zig build run<cr>
+nnoremap <localleader>b :T zid build test<cr>
+nnoremap <localleader>c :T zid build run<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 
@@ -240,11 +242,6 @@ let g:zig_fmt_autosave = 0
 let g:conjure#debug = v:false
 let g:conjure#log#hud#enabled = v:false
 
-" Gitgutter
-nmap <leader>gs <Plug>(GitGutterStageHunk)
-nmap <leader>gu <Plug>(GitGutterUndoHunk)
-nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-
 " Goyo.vim
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
@@ -267,3 +264,20 @@ map *  <Plug>(asterisk-z*)
 map #  <Plug>(asterisk-z#)
 map g* <Plug>(asterisk-gz*)
 map g# <Plug>(asterisk-gz#)
+
+lua <<EOF
+require('gitsigns').setup {
+  attach_to_untracked = false,
+  signs = {
+      add = {text = '+'},
+      change = {text = '~', show_count = true},
+      delete = {show_count = true},
+      changedelete = {hl = 'GitSignsDelete', text = '~', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+  },
+  keymaps = {
+      ['n <leader>ga'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+      ['n <leader>gu'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+      ['n <leader>gp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+  },
+}
+EOF

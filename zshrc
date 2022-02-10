@@ -140,8 +140,8 @@ alias tw='timew'
 alias twt='timew summary 24hours'
 alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
-alias zigd="~/repos/zig/build/zig"
 alias zid="~/repos/zig/build/zig"
+alias sid="~/repos/zig/stage2/bin/zig"
 
 java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home' }
 java16() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home' }
