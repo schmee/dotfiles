@@ -21,10 +21,11 @@ Plug 'lfilho/cosco.vim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhinz/vim-startify'
+" Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'mtth/scratch.vim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-treesitter/playground'
 " Plug 'olical/conjure'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
@@ -194,11 +195,11 @@ let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3
 let g:fzf_preview_window = ''
 
 " " Deoplete
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " call deoplete#custom#option('auto_complete_delay', 0)
 " call deoplete#custom#option('auto_refresh_delay', 5)
-call deoplete#custom#source('_', 'smart_case', v:true)
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" call deoplete#custom#source('_', 'smart_case', v:true)
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
@@ -213,16 +214,16 @@ nnoremap <localleader>c :T zid build run<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"vim", "zig"},
-  sync_install = false,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   ensure_installed = {"vim", "zig"},
+"   sync_install = false,
+"   highlight = {
+"     enable = true,
+"     additional_vim_regex_highlighting = false,
+"   },
+" }
+" EOF
 
 " Edit .vimrc
 function! EditVimRc()
@@ -281,3 +282,5 @@ require('gitsigns').setup {
   },
 }
 EOF
+
+" let g:coq_settings = { 'display.pum.fast_close': v:false }
