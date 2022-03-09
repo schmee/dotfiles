@@ -88,8 +88,23 @@
     (println "Patching " path-to-file)
     (sh "patch" "-u" path-to-file (.toString (fs/path dotfiles "key-bindings.patch")))))
 
+(defn create-if-not-exists [path]
+  (if (fs/exists? path)
+    (println "Path already exists: " path)
+    (fs/create-dir path)))
+
+(defn bootstrap []
+  (println "Bootstrapping...")
+  (create-if-not-exists (fs/path home ".config"))
+  (create-if-not-exists (fs/path home ".config/kitty"))
+  (create-if-not-exists (fs/path home ".config/nvim"))
+  (create-if-not-exists (fs/path home ".lein"))
+  (create-if-not-exists (fs/path home ".hushlogin"))
+  (copy-to paths))
+
 (condp = (first *command-line-args*)
   "read" (read-from paths)
   "write" (copy-to paths)
   "diff" (diff paths)
+  "bootstrap" (bootstrap)
   (println "unknown command"))
