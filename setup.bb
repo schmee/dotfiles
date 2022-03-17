@@ -101,7 +101,7 @@
   (create-if-not-exists (fs/path home ".config/kitty"))
   (create-if-not-exists (fs/path home ".config/nvim"))
   (create-if-not-exists (fs/path home ".lein"))
-  (create-if-not-exists (fs/path home ".hushlogin"))
+  (fs/create-file (fs/path home ".hushlogin"))
   (copy-to paths))
 
 (condp = (first *command-line-args*)
