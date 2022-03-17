@@ -1,0 +1,6 @@
+source ~/.config/nvim/init.vim
+
+map <leader>b <Action>(Run)
+map <leader>d <Action>(Debug)
+map <leader>o <Action>(OptimizeImports)
+map <leader>r <Action>(RenameElement)

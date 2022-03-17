@@ -44,7 +44,9 @@
       :path ".zshrc"
       :post-update-hooks [benchmark-shell]}
      {:file "zlogin"
-      :path ".zlogin"}]))
+      :path ".zlogin"}
+     {:file "ideavimrc"
+      :path ".ideavimrc"}]))
 
 (defn run-post-update-hook [{:keys [ask? fn desc]}]
   (if ask?
