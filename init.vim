@@ -5,7 +5,7 @@ set rtp+=/usr/local/opt/fzf
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
