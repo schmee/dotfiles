@@ -17,5 +17,6 @@ git clone https://github.com/romkatv/powerlevel10k.git $HOME
 
 defaults write -g InitialKeyRepeat -int 15 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+defaults -currentHost write -g AppleFontSmoothing -int 0 # disable font smoothing
 
 ./setup.bb bootstrap
