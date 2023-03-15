@@ -6,12 +6,7 @@ filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'airblade/vim-gitgutter'
-Plug 'arcticicestudio/nord-vim'
-Plug 'dracula/vim'
-Plug 'EdenEast/nightfox.nvim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -21,18 +16,13 @@ Plug 'junegunn/limelight.vim'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
-" Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
 Plug 'mhartington/oceanic-next'
 Plug 'mhinz/vim-startify'
-" Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'mtth/scratch.vim'
 Plug 'neovim/nvim-lspconfig'
-" Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'nvim-treesitter/playground'
 Plug 'olical/conjure'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
@@ -48,16 +38,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ziglang/zig.vim'
 
-" Testing some light color schemes...
-Plug 'preservim/vim-colors-pencil'
-Plug 'endel/vim-github-colorscheme'
-Plug 'chiendo97/intellij.vim'
-Plug 'rakr/vim-one'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'vim-scripts/summerfruit256.vim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'romgrk/github-light.vim'
-Plug 'cocopon/iceberg.vim'
-Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 
@@ -186,36 +168,10 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-" lukas-reineke/indent-blankline.nvim
-let g:indent_blankline_enabled = v:false
-nnoremap <leader>ig :IndentBlanklineToggle<CR>
-"lua <<EOF
-"vim.opt.termguicolors = true
-"vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-"vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-"vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-"vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-"vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-"vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
-
-"require("indent_blankline").setup {
-"    char_highlight_list = {
-"        "IndentBlanklineIndent1",
-"        "IndentBlanklineIndent2",
-"        "IndentBlanklineIndent3",
-"        "IndentBlanklineIndent4",
-"        "IndentBlanklineIndent5",
-"        "IndentBlanklineIndent6",
-"    },
-"}
-"EOF
-
 " lessmess
 let g:enable_lessmess_onsave = 1
 
 " vim-expand-region
-" map m <Plug>(expand_region_expand)
-" map M <Plug>(expand_region_shrink)"
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
@@ -250,17 +206,6 @@ nnoremap <localleader>c :Tkill <bar> T zig build run<cr>
 nnoremap <localleader>x :T !!<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
-
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   ensure_installed = {"vim", "zig"},
-"   sync_install = false,
-"   highlight = {
-"     enable = true,
-"     additional_vim_regex_highlighting = false,
-"   },
-" }
-" EOF
 
 " Edit .vimrc
 function! EditVimRc()
