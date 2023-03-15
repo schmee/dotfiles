@@ -8,25 +8,32 @@ call plug#begin('~/.vim/plugged')
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'airblade/vim-gitgutter'
 Plug 'arcticicestudio/nord-vim'
+Plug 'dracula/vim'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
 " Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'kassio/neoterm'
 Plug 'mboughaba/vim-lessmess'
+Plug 'mhartington/oceanic-next'
 Plug 'mhinz/vim-startify'
 " Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'mtth/scratch.vim'
+Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/plenary.nvim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'nvim-treesitter/playground'
-" Plug 'olical/conjure'
+Plug 'olical/conjure'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
 Plug 'sickill/vim-pasta'
@@ -41,12 +48,39 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ziglang/zig.vim'
 
+" Testing some light color schemes...
+Plug 'preservim/vim-colors-pencil'
+Plug 'endel/vim-github-colorscheme'
+Plug 'chiendo97/intellij.vim'
+Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'vim-scripts/summerfruit256.vim'
+Plug 'romgrk/github-light.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'ayu-theme/ayu-vim'
+
 call plug#end()
+
+lua <<EOF
+require("tokyonight").setup({
+  -- your configuration comes here
+  -- or leave it empty to use the default settings
+  style = "storm", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+  terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+  styles = {
+    -- Style to be applied to different syntax groups
+    -- Value is any valid attr-list value for `:help nvim_set_hl`
+    comments = { italic = false },
+    keywords = { italic = false },
+  },
+  dim_inactive = false, -- dims inactive windows
+})
+EOF
 
 autocmd BufNewFile,BufRead *.zig set ft=zig
 autocmd BufNewFile,BufRead *.bb set ft=clojure
 autocmd Filetype java setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
-colorscheme nord
+colorscheme tokyonight
 filetype indent on
 filetype on
 filetype plugin on
@@ -195,11 +229,11 @@ let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3
 let g:fzf_preview_window = ''
 
 " " Deoplete
-" let g:deoplete#enable_at_startup = 1
-" call deoplete#custom#option('auto_complete_delay', 0)
-" call deoplete#custom#option('auto_refresh_delay', 5)
-" call deoplete#custom#source('_', 'smart_case', v:true)
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('auto_complete_delay', 0)
+call deoplete#custom#option('auto_refresh_delay', 5)
+call deoplete#custom#source('_', 'smart_case', v:true)
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " cosco
 autocmd FileType java nmap <S-k> <Plug>(cosco-commaOrSemiColon)
@@ -209,8 +243,11 @@ autocmd FileType zig nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = 'vertical'
-nnoremap <localleader>b :T zid build test<cr>
-nnoremap <localleader>c :T zid build run<cr>
+nnoremap <localleader>b :T zig build test<cr>
+" nnoremap <localleader>c :T zig build run<cr>
+" nnoremap <localleader>c :T zig build run<cr>
+nnoremap <localleader>c :Tkill <bar> T zig build run<cr>
+nnoremap <localleader>x :T !!<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 
@@ -255,6 +292,7 @@ let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
 let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
 
 " nmap <localleader>c :ConjureEvalBuf<CR>
+nmap <localleader>m <localleader>emm
 "
 nmap s <plug>(SubversiveSubstitute)
 nmap <leader>s <plug>(SubversiveSubstituteRange)
@@ -279,8 +317,14 @@ require('gitsigns').setup {
       ['n <leader>ga'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
       ['n <leader>gu'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
       ['n <leader>gp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+      ['n <leader>gn'] = '<cmd>lua require"gitsigns".next_hunk()<CR>',
   },
 }
 EOF
 
-" let g:coq_settings = { 'display.pum.fast_close': v:false }
+lua <<EOF
+require("luasnip.loaders.from_snipmate").load({ paths = "/Users/johnschmidt/.vim/snippets"} )
+EOF
+
+imap <silent><expr> <C-l> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
+imap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>

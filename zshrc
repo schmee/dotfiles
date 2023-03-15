@@ -25,7 +25,6 @@ export LEIN_USE_BOOTCLASSPATH=no
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 export NNN_COLORS='2'
 export NNN_PLUG='o:fzopen'
-export PATH="/opt/apache-maven-3.6.3/bin:$PATH"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000000
@@ -96,7 +95,7 @@ alias gf='git fetch'
 alias gls='git ls=log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate'
 alias gm='git checkout master'
 alias gm='git merge --no-ff'
-alias go='hub browse'
+alias go='gh repo view -w'
 alias gpf='git push --force'
 alias gpr='git pull --rebase'
 alias gprs='git pull --rebase --stat'
@@ -117,6 +116,7 @@ alias h='xh'
 alias hc='hub compare'
 alias hv='xh -v'
 alias javlaskitdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder'
+alias kc='kubectl'
 alias l='ls -alh'
 alias lc='lein clean'
 alias lf='lein fig:build'
@@ -141,8 +141,14 @@ alias tw='timew'
 alias twt='timew summary 24hours'
 alias tww='timew summary :week'
 alias workdonetoday="git diff master@{yesterday} --stat -- . ':(exclude)*.edn'"
-alias zid="~/repos/zig/build/zig"
-alias sid="~/repos/zig/stage2/bin/zig"
+alias zig="~/zig-stable/stage3/bin/zig"
+alias zid="~/repos/zig/build/stage4/bin/zig"
+alias zim="~/repos/zig/build/stage4-master/bin/zig"
+alias zb="zig build"
+alias zrm="time stage3/bin/zig build -p stage4-master -Dno-lib -Denable-llvm"
+alias zrd="time stage3/bin/zig build -p stage4 -Dno-lib -Denable-llvm"
+alias hw="~/other_projects/zig/habu/zig-out/bin/habu"
+alias hwl="hw link"
 
 java14() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home' }
 java16() { export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-16.jdk/Contents/Home' }
@@ -159,6 +165,15 @@ twc() {
 tws() {
   TIME="${1:-0}"
   timew stop "$TIME"mins ago
+}
+
+zmr() {
+  FILE="${1:-0}"
+  rm -rf ./zig-cache "$FILE" "$FILE".o
+}
+
+ccd() {
+  mkdir $1 && cd $1
 }
 
 source ~/dotfiles/completion.zsh

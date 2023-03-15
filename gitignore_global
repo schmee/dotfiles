@@ -4,4 +4,5 @@
 .nrepl-port
 zig-cache
 zig-out
+data
 notes.txt
