@@ -5,31 +5,28 @@ set rtp+=/usr/local/opt/fzf
 filetype plugin indent on
 call plug#begin('~/.vim/plugged')
 
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
+Plug 'PeterRincker/vim-argumentative'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'axelf4/vim-strip-trailing-whitespace'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
-Plug 'haya14busa/incsearch.vim'
+Plug 'gbprod/substitute.nvim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
+Plug 'kassio/neoterm'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
-Plug 'kassio/neoterm'
-Plug 'mboughaba/vim-lessmess'
 Plug 'mhartington/oceanic-next'
 Plug 'mhinz/vim-startify'
 Plug 'mtth/scratch.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'olical/conjure'
-Plug 'PeterRincker/vim-argumentative'
 Plug 'raimondi/delimitMate'
 Plug 'sickill/vim-pasta'
-Plug 'svermeulen/vim-subversive'
 Plug 'terryma/vim-expand-region'
-Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -37,6 +34,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ziglang/zig.vim'
+
+" Plug 'wellle/context.vim'
+" Plug 'olical/conjure'
 
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'romgrk/github-light.vim'
@@ -155,22 +155,6 @@ let maplocalleader = ","
 " delimitMate
 let delimitMate_expand_cr = 1
 
-" incserach.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)"
-
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-
-" lessmess
-let g:enable_lessmess_onsave = 1
-
 " vim-expand-region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -184,7 +168,7 @@ nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
 let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3 } }
 let g:fzf_preview_window = ''
 
-" " Deoplete
+" Deoplete
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('auto_complete_delay', 0)
 call deoplete#custom#option('auto_refresh_delay', 5)
@@ -199,13 +183,14 @@ autocmd FileType zig nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = 'vertical'
-nnoremap <localleader>b :T zig build test<cr>
-" nnoremap <localleader>c :T zig build run<cr>
-" nnoremap <localleader>c :T zig build run<cr>
-nnoremap <localleader>c :Tkill <bar> T zig build run<cr>
+nnoremap <localleader>b :T zim build test<cr>
+" nnoremap <localleader>c :T zim build run<cr>
+" nnoremap <localleader>c :T zim build run<cr>
+nnoremap <localleader>c :Tkill <bar> T rm -f /tmp/testtest && zim build run<cr>
 nnoremap <localleader>x :T !!<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
+nnoremap <localleader>m :luafile %<cr>
 
 " Edit .vimrc
 function! EditVimRc()
@@ -221,9 +206,10 @@ tabe
 endfunction
 nnoremap <F7> :call EditZshRc()<CR>
 
-let g:zig_fmt_autosave = 0
-let g:conjure#debug = v:false
-let g:conjure#log#hud#enabled = v:false
+" Conjure
+" let g:zig_fmt_autosave = 0
+" let g:conjure#debug = v:false
+" let g:conjure#log#hud#enabled = v:false
 
 " Goyo.vim
 autocmd! User GoyoEnter Limelight
@@ -233,15 +219,11 @@ autocmd! User GoyoLeave Limelight!
 let g:pasta_disabled_filetypes = ['clj', 'clojure']
 let g:pasta_enabled_filetypes = ['zig']
 
-let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
-let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
-
+" Conjure
+" let g:conjure#client#clojure#nrepl#refresh#after = 'user/start'
+" let g:conjure#client#clojure#nrepl#refresh#before = 'user/stop'
 " nmap <localleader>c :ConjureEvalBuf<CR>
-nmap <localleader>m <localleader>emm
-"
-nmap s <plug>(SubversiveSubstitute)
-nmap <leader>s <plug>(SubversiveSubstituteRange)
-xmap <leader>s <plug>(SubversiveSubstituteRange)
+" nmap <localleader>m <localleader>emm
 
 " vim-asterisk
 map *  <Plug>(asterisk-z*)
@@ -273,3 +255,28 @@ EOF
 
 imap <silent><expr> <C-l> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
 imap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>
+
+" vim-context
+" let g:context_enabled = 1
+" let g:context_add_mappings = 0
+
+lua <<EOF
+  require("substitute").setup({
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  })
+
+  vim.keymap.set("n", "s", require('substitute').operator, { noremap = true })
+  vim.keymap.set("n", "ss", require('substitute').line, { noremap = true })
+  vim.keymap.set("x", "s", require('substitute').visual, { noremap = true })
+
+  vim.keymap.set("n", "<leader>s", require('substitute.range').operator, { noremap = true })
+  vim.keymap.set("x", "<leader>s", require('substitute.range').visual, { noremap = true })
+  vim.keymap.set("n", "<leader>ss", require('substitute.range').word, { noremap = true })
+
+  vim.keymap.set("n", "cx", require('substitute.exchange').operator, { noremap = true })
+  vim.keymap.set("n", "cxx", require('substitute.exchange').line, { noremap = true })
+  vim.keymap.set("x", "X", require('substitute.exchange').visual, { noremap = true })
+  vim.keymap.set("n", "sxc", require('substitute.exchange').cancel, { noremap = true })
+EOF
