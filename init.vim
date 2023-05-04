@@ -8,7 +8,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
 Plug 'PeterRincker/vim-argumentative'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'axelf4/vim-strip-trailing-whitespace'
+" Plug 'axelf4/vim-strip-trailing-whitespace'
+Plug 'echasnovski/mini.trailspace', { 'branch': 'stable' }
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'gbprod/substitute.nvim'
 Plug 'haya14busa/vim-asterisk'
@@ -280,3 +281,9 @@ lua <<EOF
   vim.keymap.set("x", "X", require('substitute.exchange').visual, { noremap = true })
   vim.keymap.set("n", "sxc", require('substitute.exchange').cancel, { noremap = true })
 EOF
+
+" mini.trailspace
+lua <<EOF
+  require('mini.trailspace').setup()
+EOF
+autocmd BufWrite * silent! lua MiniTrailspace.trim()
