@@ -131,6 +131,7 @@ nmap <silent> <C-s> <C-w>s
 nmap <silent> <C-v> <C-w>v
 nmap <silent> <Leader>h :nohl<CR>
 nnoremap <C-g> :Rg<Cr>
+nnoremap g<CR> <CR>
 nnoremap <CR> o<Esc>
 nnoremap <S-Enter> O<Esc>
 nnoremap <leader>do :windo diffoff<CR>
@@ -165,7 +166,9 @@ nmap <C-f> :GFiles <CR>
 nmap <C-b> :Buffers <CR>
 nmap <localleader>j :Lines <CR>
 nmap <localleader>l :BLines <CR>
+nmap <localleader>h :Help <CR>
 nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
+nnoremap <C-0> :call fzf#vim#files('~/repos', {}, 0) <CR>
 let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3 } }
 let g:fzf_preview_window = ''
 
@@ -282,8 +285,41 @@ lua <<EOF
   vim.keymap.set("n", "sxc", require('substitute.exchange').cancel, { noremap = true })
 EOF
 
-" mini.trailspace
+" copied from mini.trailspace
 lua <<EOF
-  require('mini.trailspace').setup()
+  --- Trim trailing whitespace
+  function trim()
+    -- Save cursor position to later restore
+    local curpos = vim.api.nvim_win_get_cursor(0)
+    -- Search and replace trailing whitespace
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.api.nvim_win_set_cursor(0, curpos)
+  end
 EOF
-autocmd BufWrite * silent! lua MiniTrailspace.trim()
+autocmd BufWrite * silent! lua trim()
+
+" vim-fugitive
+let g:fugitive_dynamic_colors = 0
+
+lua <<EOF
+  function open_file_from_zig_compile_error()
+    local line = vim.api.nvim_get_current_line()
+    local parts = {}
+    for part in string.gmatch(line, "([^:]+)") do
+      table.insert(parts, part)
+    end
+    local filename, row, col = unpack(parts)
+
+    vim.cmd('wincmd h | edit ' .. filename)
+    local rowcol = {row, col}
+    vim.api.nvim_win_set_cursor(0, {tonumber(row), tonumber(col)})
+    vim.cmd('wincmd l')
+  end
+
+  vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+    pattern = {"term://*"},
+    callback = function()
+      vim.api.nvim_buf_set_keymap(0, 'n', '<CR>', ':lua open_file_from_zig_compile_error()<CR>', {noremap = true, silent = true})
+    end
+  })
+EOF
