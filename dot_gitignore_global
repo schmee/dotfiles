@@ -2,6 +2,7 @@
 .rebel_readline_history
 .rebl
 .nrepl-port
+.stignore
 zig-cache
 zig-out
 data

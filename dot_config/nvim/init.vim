@@ -9,21 +9,26 @@ Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
 Plug 'PeterRincker/vim-argumentative'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'axelf4/vim-strip-trailing-whitespace'
-Plug 'echasnovski/mini.trailspace', { 'branch': 'stable' }
+" Plug 'echasnovski/mini.trailspace', { 'branch': 'stable' }
+Plug 'echasnovski/mini.splitjoin', { 'branch': 'main' }
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
+Plug 'folke/flash.nvim'
 Plug 'gbprod/substitute.nvim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'mhinz/vim-startify'
-Plug 'mtth/scratch.vim'
+" Plug 'mtth/scratch.vim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'nordtheme/vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'raimondi/delimitMate'
 Plug 'sickill/vim-pasta'
@@ -187,11 +192,14 @@ autocmd FileType zig nmap <S-k> <Plug>(cosco-commaOrSemiColon)
 let g:neoterm_auto_repl_cmd = 0
 let g:neoterm_autoscroll = 1
 let g:neoterm_default_mod = 'vertical'
-nnoremap <localleader>b :T zim build test<cr>
+nnoremap <localleader>b :T zig build test<cr>
 " nnoremap <localleader>c :T zim build run<cr>
 " nnoremap <localleader>c :T zim build run<cr>
-nnoremap <localleader>c :Tkill <bar> T rm -f /tmp/testtest && zim build run<cr>
-nnoremap <localleader>x :T !!<cr>
+" nnoremap <localleader>c :Tkill <bar> T rm -f /tmp/testtest && zim build run<cr>
+nnoremap <localleader>c :Tkill <bar> T zig10 build run<cr>
+nnoremap <localleader>f :Tkill <bar> T zig10 build run -Drelease-fast<cr>
+nnoremap <localleader>s :Tkill <bar> T zig10 build run -Drelease-safe<cr>
+nnoremap <localleader>x :Tkill <bar> T !!<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 nnoremap <localleader>m :luafile %<cr>
@@ -322,4 +330,44 @@ lua <<EOF
       vim.api.nvim_buf_set_keymap(0, 'n', '<CR>', ':lua open_file_from_zig_compile_error()<CR>', {noremap = true, silent = true})
     end
   })
+EOF
+
+
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+lua << EOF
+require('mini.splitjoin').setup({
+  mappings = {
+      toggle = 'gs',
+    },
+})
+EOF
+
+lua << EOF
+    require('flash').setup{
+        search = {
+            -- mode = function(str)
+            --   return "\\<" .. str
+            -- end
+            mode = "fuzzy",
+        },
+        -- jump = {
+        --     autojump = true,
+        -- },
+        -- label = {
+        --     rainbow = {
+        --       enabled = true,
+        --       shade = 9,
+        --     }
+        -- }
+    }
+
+    vim.keymap.set({"n","o","x"},"s", function() require("flash").jump() end, {desc="Flash"})
+    vim.keymap.set({"i"}, "<C-j>", function() require("flash").jump() end, {desc="Flash"})
+
 EOF

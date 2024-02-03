@@ -27,6 +27,7 @@
     rc = commit --amend --no-edit
     rca = commit -a --amend --no-edit
     rcp = !git rca && git push -f
+    root = rev-parse --show-toplevel
     rh = reset --hard
     rhh = reset HEAD^ --hard
     rhhh = reset HEAD^^ --hard
@@ -61,3 +62,11 @@
 
 [diff]
     compactionHeuristic = true
+[user]
+	email = {{ .email }}
+	name = {{ .name }}
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
