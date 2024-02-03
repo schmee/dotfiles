@@ -180,7 +180,7 @@ ccd() {
   mkdir $1 && cd $1
 }
 
-source ~/dotfiles/completion.zsh
+source ~/completion.zsh
 
 # autoload -Uz compinit && compinit
 autoload -Uz compinit
