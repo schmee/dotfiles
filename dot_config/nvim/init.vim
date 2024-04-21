@@ -12,7 +12,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'echasnovski/mini.trailspace', { 'branch': 'stable' }
 Plug 'echasnovski/mini.splitjoin', { 'branch': 'main' }
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
-Plug 'folke/flash.nvim'
+" Plug 'folke/flash.nvim'
 Plug 'gbprod/substitute.nvim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -35,19 +35,26 @@ Plug 'sickill/vim-pasta'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-fugitive' # too slow for Sema
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ziglang/zig.vim'
 
-" Plug 'wellle/context.vim'
-" Plug 'olical/conjure'
+" Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+" Plug 'kylechui/nvim-surround'
+
+Plug 'wellle/context.vim'
+Plug 'olical/conjure'
 
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'romgrk/github-light.vim'
 
 call plug#end()
+
+" Fixes scroll flickering in Kitty: https://github.com/kovidgoyal/kitty/issues/108
+let &t_ut=''
 
 lua <<EOF
 require("tokyonight").setup({
@@ -173,7 +180,7 @@ nmap <localleader>j :Lines <CR>
 nmap <localleader>l :BLines <CR>
 nmap <localleader>h :Help <CR>
 nnoremap <C-p> :call fzf#vim#files('~/projects', {}, 0) <CR>
-nnoremap <C-0> :call fzf#vim#files('~/repos', {}, 0) <CR>
+nnoremap <C-0> :call fzf#vim#files('~/repos', {'options': '--reverse'}, 0) <CR>
 let g:fzf_layout = { 'window': { 'relative': v:true, 'width': 0.9, 'height': 0.3 } }
 let g:fzf_preview_window = ''
 
@@ -196,10 +203,11 @@ nnoremap <localleader>b :T zig build test<cr>
 " nnoremap <localleader>c :T zim build run<cr>
 " nnoremap <localleader>c :T zim build run<cr>
 " nnoremap <localleader>c :Tkill <bar> T rm -f /tmp/testtest && zim build run<cr>
-nnoremap <localleader>c :Tkill <bar> T zig10 build run<cr>
-nnoremap <localleader>f :Tkill <bar> T zig10 build run -Drelease-fast<cr>
-nnoremap <localleader>s :Tkill <bar> T zig10 build run -Drelease-safe<cr>
+nnoremap <localleader>c :Tkill <bar> T zig3 build run<cr>
+nnoremap <localleader>f :Tkill <bar> T zig3 build run -Doptimize=ReleaseFast<cr>
+nnoremap <localleader>s :Tkill <bar> T zig3 build run -Doptimize=ReleaseSafe<cr>
 nnoremap <localleader>x :Tkill <bar> T !!<cr>
+nnoremap <localleader>z :Tkill <bar> T zig3 build test<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 nnoremap <localleader>m :luafile %<cr>
@@ -269,8 +277,8 @@ imap <silent><expr> <C-l> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-o
 imap <silent> <C-j> <cmd>lua require'luasnip'.jump(-1)<Cr>
 
 " vim-context
-" let g:context_enabled = 1
-" let g:context_add_mappings = 0
+let g:context_enabled = 1
+let g:context_add_mappings = 0
 
 lua <<EOF
   require("substitute").setup({
@@ -332,8 +340,6 @@ lua <<EOF
   })
 EOF
 
-
-
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
@@ -343,31 +349,54 @@ nmap ga <Plug>(EasyAlign)
 lua << EOF
 require('mini.splitjoin').setup({
   mappings = {
-      toggle = 'gs',
+      toggle = 'gS',
     },
 })
 EOF
 
-lua << EOF
-    require('flash').setup{
-        search = {
-            -- mode = function(str)
-            --   return "\\<" .. str
-            -- end
-            mode = "fuzzy",
-        },
-        -- jump = {
-        --     autojump = true,
-        -- },
-        -- label = {
-        --     rainbow = {
-        --       enabled = true,
-        --       shade = 9,
-        --     }
-        -- }
-    }
+" lua << EOF
+"     require('flash').setup{
+"         -- search = {
+"         --     -- mode = function(str)
+"         --     --   return "\\<" .. str
+"         --     -- end
+"         --     mode = "fuzzy",
+"                enabled = false,
+"         -- },
+"         -- jump = {
+"         --     autojump = true,
+"         -- },
+"         -- label = {
+"         --     rainbow = {
+"         --       enabled = true,
+"         --       shade = 9,
+"         --     }
+"         -- }
+"     }
+"     vim.keymap.set({"n","o","x"},"s", function() require("flash").jump() end, {desc="Flash"})
+"     -- vim.keymap.set({"n","o","x"},"S", function() require("flash").treesitter() end, {desc="Flash Treesitter"})
+"     vim.keymap.set({"i"}, "<C-j>", function() require("flash").jump() end, {desc="Flash"})
+" EOF
 
-    vim.keymap.set({"n","o","x"},"s", function() require("flash").jump() end, {desc="Flash"})
-    vim.keymap.set({"i"}, "<C-j>", function() require("flash").jump() end, {desc="Flash"})
 
-EOF
+" lua << EOF
+"   require'nvim-treesitter.configs'.setup {
+"     ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+"     highlight = {
+"       enable = true,
+"       additional_vim_regex_highlighting = false,
+"     },
+"     incremental_selection = {
+"         enable = true,
+"         keymaps = {
+"           node_incremental = "v",
+"           node_decremental = "V",
+"         }
+"       }
+"     }
+" EOF
+
+
+" lua << EOF
+"   require('nvim-surround').setup({})
+" EOF
