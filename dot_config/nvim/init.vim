@@ -8,30 +8,25 @@ call plug#begin('~/.vim/plugged')
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.0.0'}
 Plug 'PeterRincker/vim-argumentative'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'axelf4/vim-strip-trailing-whitespace'
-" Plug 'echasnovski/mini.trailspace', { 'branch': 'stable' }
 Plug 'echasnovski/mini.splitjoin', { 'branch': 'main' }
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
-" Plug 'folke/flash.nvim'
 Plug 'gbprod/substitute.nvim'
+Plug 'gbprod/yanky.nvim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kassio/neoterm'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'lfilho/cosco.vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'mhartington/oceanic-next'
 Plug 'mhinz/vim-startify'
-" Plug 'mtth/scratch.vim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'nordtheme/vim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'olical/conjure'
 Plug 'raimondi/delimitMate'
-Plug 'sickill/vim-pasta'
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -41,20 +36,18 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'ziglang/zig.vim'
 
+" Plug 'neovim/nvim-lspconfig'
 " Plug 'nvim-treesitter/nvim-treesitter'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'kylechui/nvim-surround'
+" Plug 'wellle/context.vim'
 
-Plug 'wellle/context.vim'
-Plug 'olical/conjure'
-
+" Color schemes
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'nordtheme/vim'
 Plug 'romgrk/github-light.vim'
 
 call plug#end()
-
-" Fixes scroll flickering in Kitty: https://github.com/kovidgoyal/kitty/issues/108
-let &t_ut=''
 
 lua <<EOF
 require("tokyonight").setup({
@@ -108,6 +101,7 @@ set nowritebackup
 set number
 set ruler
 set scrolloff=15
+set scrollback=50000
 set showmatch
 set sidescroll=10
 set smartcase
@@ -203,11 +197,11 @@ nnoremap <localleader>b :T zig build test<cr>
 " nnoremap <localleader>c :T zim build run<cr>
 " nnoremap <localleader>c :T zim build run<cr>
 " nnoremap <localleader>c :Tkill <bar> T rm -f /tmp/testtest && zim build run<cr>
-nnoremap <localleader>c :Tkill <bar> T zig3 build run<cr>
-nnoremap <localleader>f :Tkill <bar> T zig3 build run -Doptimize=ReleaseFast<cr>
-nnoremap <localleader>s :Tkill <bar> T zig3 build run -Doptimize=ReleaseSafe<cr>
+nnoremap <localleader>c :Tkill <bar> T zig build run<cr>
+nnoremap <localleader>f :Tkill <bar> T zig build run -Doptimize=ReleaseFast<cr>
+nnoremap <localleader>s :Tkill <bar> T zig build run -Doptimize=ReleaseSafe<cr>
 nnoremap <localleader>x :Tkill <bar> T !!<cr>
-nnoremap <localleader>z :Tkill <bar> T zig3 build test<cr>
+nnoremap <localleader>z :Tkill <bar> T zig build test<cr>
 nnoremap <localleader>t :Topen<cr>
 nnoremap <localleader>v :Tclear<cr>
 nnoremap <localleader>m :luafile %<cr>
@@ -258,14 +252,26 @@ require('gitsigns').setup {
       add = {text = '+'},
       change = {text = '~', show_count = true},
       delete = {show_count = true},
-      changedelete = {hl = 'GitSignsDelete', text = '~', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+      changedelete = {text = '~', show_count = true},
   },
-  keymaps = {
-      ['n <leader>ga'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-      ['n <leader>gu'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-      ['n <leader>gp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-      ['n <leader>gn'] = '<cmd>lua require"gitsigns".next_hunk()<CR>',
-  },
+  on_attach = function(bufnr)
+    local gitsigns = require('gitsigns')
+
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    vim.api.nvim_set_hl(0, 'GitSignsChangedelete', { link = 'GitSignsDelete' })
+    vim.api.nvim_set_hl(0, 'GitSignsChangedeleteLn', { link = 'GitSignsDeleteLn' })
+    vim.api.nvim_set_hl(0, 'GitSignsChangedeleteNr', { link = 'GitSignsDeleteNr' })
+
+    map('n', '<leader>ga', gitsigns.stage_hunk)
+    map('n', '<leader>gu', gitsigns.reset_hunk)
+    map('n', '<leader>gp', gitsigns.preview_hunk)
+    map('n', '<leader>gn', gitsigns.next_hunk)
+  end
 }
 EOF
 
@@ -290,10 +296,6 @@ lua <<EOF
   vim.keymap.set("n", "s", require('substitute').operator, { noremap = true })
   vim.keymap.set("n", "ss", require('substitute').line, { noremap = true })
   vim.keymap.set("x", "s", require('substitute').visual, { noremap = true })
-
-  vim.keymap.set("n", "<leader>s", require('substitute.range').operator, { noremap = true })
-  vim.keymap.set("x", "<leader>s", require('substitute.range').visual, { noremap = true })
-  vim.keymap.set("n", "<leader>ss", require('substitute.range').word, { noremap = true })
 
   vim.keymap.set("n", "cx", require('substitute.exchange').operator, { noremap = true })
   vim.keymap.set("n", "cxx", require('substitute.exchange').line, { noremap = true })
@@ -396,7 +398,21 @@ EOF
 "     }
 " EOF
 
-
 " lua << EOF
 "   require('nvim-surround').setup({})
 " EOF
+
+" yanky.nvim
+lua <<EOF
+require("yanky").setup({
+  highlight = {
+    on_put = false,
+    on_yank = false,
+  },
+})
+
+vim.keymap.set("n", "p", "<Plug>(YankyPutAfterFilter)")
+vim.keymap.set("n", "P", "<Plug>(YankyPutBeforeFilter)")
+vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
+vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
+EOF
