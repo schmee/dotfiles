@@ -409,8 +409,14 @@ require("yanky").setup({
   },
 })
 
-vim.keymap.set("n", "p", "<Plug>(YankyPutAfterFilter)")
-vim.keymap.set("n", "P", "<Plug>(YankyPutBeforeFilter)")
+vim.keymap.set("n", "p", "<Plug>(YankyPutIndentAfter)")
+vim.keymap.set("n", "P", "<Plug>(YankyPutIndentBefore)")
 vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
 EOF
+
+" vim-visual-multi
+let g:VM_add_cursor_at_pos_no_mappings = 1
+let g:VM_maps = {}
+let g:VM_maps['Toggle Mappings']  = '<localleader><Space>'
+let g:VM_maps['Add Cursor At Pos']  = '<localleader>m'
