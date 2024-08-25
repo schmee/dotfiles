@@ -5,6 +5,7 @@
 .nrepl-port
 .stignore
 zig-cache
+.zig-cache
 zig-out
 data
 notes.txt
